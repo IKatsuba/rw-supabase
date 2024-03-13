@@ -5,9 +5,6 @@ SSL_DIR="/var/lib/postgresql/data/certs"
 # Use sudo to create the directory as root
 sudo mkdir -p "$SSL_DIR"
 
-# recursively change ownership of all files in the directory
-sudo chown postgres:postgres -R "/var/lib/postgresql/data"
-
 # Use sudo to change ownership as root
 sudo chown postgres:postgres "$SSL_DIR"
 
