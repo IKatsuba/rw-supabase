@@ -21,3 +21,4 @@ COPY ./jwt.sql /docker-entrypoint-initdb.d/init-scripts/99-jwt.sql
 COPY ./logs.sql /docker-entrypoint-initdb.d/migrations/99-logs.sql
 
 ENTRYPOINT ["wrapper.sh"]
+CMD ["postgres", "-D", "/etc/postgresql", "-c", "log_min_messages=notice"]
