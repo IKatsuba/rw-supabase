@@ -5,3 +5,5 @@ COPY ./webhooks.sql /docker-entrypoint-initdb.d/init-scripts/98-webhooks.sql
 COPY ./roles.sql /docker-entrypoint-initdb.d/init-scripts/99-roles.sql
 COPY ./jwt.sql /docker-entrypoint-initdb.d/init-scripts/99-jwt.sql
 COPY ./logs.sql /docker-entrypoint-initdb.d/migrations/99-logs.sql
+
+CMD ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "log_min_messages=fatal"]
