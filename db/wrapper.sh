@@ -4,8 +4,9 @@
 # host all all      ::1/128      md5
 # host all postgres 127.0.0.1/32 md5
 echo "
-host all all      ::1/128      md5
-host all postgres 127.0.0.1/32 md5
+host all all ::0/0     md5
+host all all ::0/0     scram-sha-256
+host all all 0.0.0.0/0 md5
 " >> "/etc/postgresql/pg_hba.conf"
 
 
