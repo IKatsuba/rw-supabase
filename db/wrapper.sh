@@ -3,8 +3,10 @@
 # add to pg_hba.conf to allow connect from any IP address
 # host all all      ::1/128      md5
 # host all postgres 127.0.0.1/32 md5
-echo "host all all      ::1/128      md5
-host all postgres 127.0.0.1/32 md5" >> "$PGDATA/pg_hba.conf"
+echo "
+host all all      ::1/128      md5
+host all postgres 127.0.0.1/32 md5
+" >> "/etc/postgresql/pg_hba.conf"
 
 
 # unset PGHOST to force psql to use Unix socket path
