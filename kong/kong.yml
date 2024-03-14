@@ -38,7 +38,7 @@ services:
 
   ## Open Auth routes
   - name: auth-v1-open
-    url: http://$AUTH_HOST/verify
+    url: http://auth:9999/verify
     routes:
       - name: auth-v1-open
         strip_path: true
@@ -47,7 +47,7 @@ services:
     plugins:
       - name: cors
   - name: auth-v1-open-callback
-    url: http://$AUTH_HOST/callback
+    url: http://auth:9999/callback
     routes:
       - name: auth-v1-open-callback
         strip_path: true
@@ -56,7 +56,7 @@ services:
     plugins:
       - name: cors
   - name: auth-v1-open-authorize
-    url: http://$AUTH_HOST/authorize
+    url: http://auth:9999/authorize
     routes:
       - name: auth-v1-open-authorize
         strip_path: true
@@ -67,8 +67,8 @@ services:
 
   ## Secure Auth routes
   - name: auth-v1
-    _comment: 'GoTrue: /auth/v1/* -> http://$AUTH_HOST/*'
-    url: http://$AUTH_HOST/
+    _comment: 'GoTrue: /auth/v1/* -> http://auth:9999/*'
+    url: http://auth:9999/
     routes:
       - name: auth-v1-all
         strip_path: true
@@ -88,8 +88,8 @@ services:
 
   ## Secure REST routes
   - name: rest-v1
-    _comment: 'PostgREST: /rest/v1/* -> http://$REST_HOST/*'
-    url: http://$REST_HOST/
+    _comment: 'PostgREST: /rest/v1/* -> http://rest:3000/*'
+    url: http://rest:3000/
     routes:
       - name: rest-v1-all
         strip_path: true
@@ -109,8 +109,8 @@ services:
 
   ## Secure GraphQL routes
   - name: graphql-v1
-    _comment: 'PostgREST: /graphql/v1/* -> http://$REST_HOST/rpc/graphql'
-    url: http://$REST_HOST/rpc/graphql
+    _comment: 'PostgREST: /graphql/v1/* -> http://rest:3000/rpc/graphql'
+    url: http://rest:3000/rpc/graphql
     routes:
       - name: graphql-v1-all
         strip_path: true
@@ -136,7 +136,7 @@ services:
   ## Secure Realtime routes
   - name: realtime-v1
     _comment: 'Realtime: /realtime/v1/* -> ws://realtime:4000/socket/*'
-    url: http://$REALTIME_HOST/socket/
+    url: http://realtime-dev.supabase-realtime:4000/socket/
     routes:
       - name: realtime-v1-all
         strip_path: true
@@ -156,8 +156,8 @@ services:
 
   ## Storage routes: the storage server manages its own auth
   - name: storage-v1
-    _comment: 'Storage: /storage/v1/* -> http://$STORAGE_HOST/*'
-    url: http://$STORAGE_HOST/
+    _comment: 'Storage: /storage/v1/* -> http://storage:5000/*'
+    url: http://storage:5000/
     routes:
       - name: storage-v1-all
         strip_path: true
@@ -168,8 +168,8 @@ services:
 
   ## Edge Functions routes
   - name: functions-v1
-    _comment: 'Edge Functions: /functions/v1/* -> http://$FUNCTIONS_HOST/*'
-    url: http://$FUNCTIONS_HOST/
+    _comment: 'Edge Functions: /functions/v1/* -> http://functions:9000/*'
+    url: http://functions:9000/
     routes:
       - name: functions-v1-all
         strip_path: true
@@ -181,7 +181,7 @@ services:
   ## Analytics routes
   - name: analytics-v1
     _comment: 'Analytics: /analytics/v1/* -> http://logflare:4000/*'
-    url: http://$ANALYTICS_HOST/
+    url: http://analytics:4000/
     routes:
       - name: analytics-v1-all
         strip_path: true
@@ -190,8 +190,8 @@ services:
 
   ## Secure Database routes
   - name: meta
-    _comment: 'pg-meta: /pg/* -> http://pg-$META_HOST/*'
-    url: http://$META_HOST/
+    _comment: 'pg-meta: /pg/* -> http://pg-meta:8080/*'
+    url: http://meta:8080/
     routes:
       - name: meta-all
         strip_path: true
@@ -209,8 +209,8 @@ services:
 
   ## Protected Dashboard - catch all remaining routes
   - name: dashboard
-    _comment: 'Studio: /* -> http://$STUDIO_HOST/*'
-    url: http://$STUDIO_HOST/
+    _comment: 'Studio: /* -> http://studio:3000/*'
+    url: http://studio:3000/
     routes:
       - name: dashboard-all
         strip_path: true
