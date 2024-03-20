@@ -1,0 +1,61 @@
+# global options
+{
+	admin off # theres no need for the admin api in railway's environment
+	persist_config off # storage isn't persistent anyway
+	auto_https off # railway handles https for us, this could in some cases cause issues if left enabled
+	# runtime logs
+	log {
+		format json # set runtime log format to json mode
+	}
+	# server options
+	servers {
+		trusted_proxies static private_ranges # trust railway's proxy
+	}
+}
+
+# site block, listens on the $PORT environment variable, automatically assigned by railway
+:{$PORT} {
+	# access logs
+	log {
+		format json # set access log format to json mode
+	}
+
+    handle_path /auth/v1/verify* {
+        reverse_proxy http://auth:9999/verify/
+    }
+    handle_path /auth/v1/callback* {
+        reverse_proxy http://auth:9999/callback/
+    }
+    handle_path /auth/v1/authorize* {
+        reverse_proxy http://auth:9999/authorize/
+    }
+
+    handle_path /auth/v1/* {
+        reverse_proxy http://auth:9999/
+    }
+
+    handle_path /rest/v1/* {
+        reverse_proxy http://rest:3000/
+    }
+
+    handle_path /graphql/v1/* {
+        reverse_proxy http://rest:3000/rpc/graphql/
+    }
+
+    handle_path /storage/v1/* {
+        reverse_proxy http://storage:5000/
+    }
+
+    handle_path /analytics/v1/* {
+        reverse_proxy http://analytics:4000/
+    }
+
+    handle_path /pg/* {
+        reverse_proxy http://meta:8080/
+    }
+
+    handle_path /* {
+        reverse_proxy http://studio:3000/
+    }
+
+}
