@@ -20,42 +20,33 @@
 		format json # set access log format to json mode
 	}
 
-    handle_path /auth/v1/verify* {
-        reverse_proxy http://auth:9999/verify/
-    }
-    handle_path /auth/v1/callback* {
-        reverse_proxy http://auth:9999/callback/
-    }
-    handle_path /auth/v1/authorize* {
-        reverse_proxy http://auth:9999/authorize/
-    }
-
     handle_path /auth/v1/* {
-        reverse_proxy http://auth:9999/
+        reverse_proxy auth:9999
     }
 
     handle_path /rest/v1/* {
-        reverse_proxy http://rest:3000/
+        reverse_proxy rest:3000
     }
 
     handle_path /graphql/v1/* {
-        reverse_proxy http://rest:3000/rpc/graphql/
+        rewrite * /rpc/graphql{path}
+        reverse_proxy rest:3000
     }
 
     handle_path /storage/v1/* {
-        reverse_proxy http://storage:5000/
+        reverse_proxy storage:5000
     }
 
     handle_path /analytics/v1/* {
-        reverse_proxy http://analytics:4000/
+        reverse_proxy analytics:4000
     }
 
     handle_path /pg/* {
-        reverse_proxy http://meta:8080/
+        reverse_proxy meta:8080
     }
 
     handle_path /* {
-        reverse_proxy http://studio:3000/
+        reverse_proxy studio:3000
     }
 
 }
