@@ -13,6 +13,12 @@
 	}
 }
 
+(cors) {
+	@origin header Origin {args[0]}
+	header @origin Access-Control-Allow-Origin "{args[0]}"
+	header @origin Access-Control-Allow-Methods "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
+}
+
 # site block, listens on the $PORT environment variable, automatically assigned by railway
 :{$PORT} {
 	# access logs
@@ -20,33 +26,33 @@
 		format json # set access log format to json mode
 	}
 
-    handle_path /auth/v1/* {
-        reverse_proxy auth:9999
-    }
+	handle_path /auth/v1/* {
+		import cors localhost:4200
+		reverse_proxy auth:9999
+	}
 
-    handle_path /rest/v1/* {
-        reverse_proxy rest:3000
-    }
+	handle_path /rest/v1/* {
+		reverse_proxy rest:3000
+	}
 
-    handle_path /graphql/v1/* {
-        rewrite * /rpc/graphql{path}
-        reverse_proxy rest:3000
-    }
+	handle_path /graphql/v1/* {
+		rewrite * /rpc/graphql{path}
+		reverse_proxy rest:3000
+	}
 
-    handle_path /storage/v1/* {
-        reverse_proxy storage:5000
-    }
+	handle_path /storage/v1/* {
+		reverse_proxy storage:5000
+	}
 
-    handle_path /analytics/v1/* {
-        reverse_proxy analytics:4000
-    }
+	handle_path /analytics/v1/* {
+		reverse_proxy analytics:4000
+	}
 
-    handle_path /pg/* {
-        reverse_proxy meta:8080
-    }
+	handle_path /pg/* {
+		reverse_proxy meta:8080
+	}
 
-    handle_path /* {
-        reverse_proxy studio:3000
-    }
-
+	handle_path /* {
+		reverse_proxy studio:3000
+	}
 }
