@@ -46,6 +46,9 @@
     }
 
     handle_path /* {
+        basicauth {
+             {DASHBOARD_USERNAME} {DASHBOARD_PASSWORD}
+        }
         reverse_proxy studio:3000
     }
 
